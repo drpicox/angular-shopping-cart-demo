@@ -1,0 +1,17 @@
+<div class="row">
+
+	<h1>Catalog</h1>
+
+	<div class="well"
+		ng-repeat="product in vm.products" 
+		>
+
+		<scd-product-media 	
+			product="product"
+			bought="vm.isBought(product)"
+			on-buy="vm.buy(product)" 
+			></scd-product-media>
+
+	</div>
+	
+</div>

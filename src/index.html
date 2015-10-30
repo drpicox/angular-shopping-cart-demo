@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="shoppingCartDemoApp">
+<head>
+	<title>Angular Shopping Cart Demo</title>
+	<!-- build:css({.tmp,.}) app.css -->
+	<link href="bundle.css" rel='stylesheet' type='text/css'>
+	<!-- endbuild -->
+
+	<style>
+	[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+		display: none !important;
+	}
+	</style>
+</head>
+<body ng-cloak>
+
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Shopping Cart demo</a>
+			</div>
+
+			<div>
+				<ul class="nav navbar-nav">
+					<li><a href="#/catalog">Catalog</a></li>
+					<li><a href="#/cart">
+						Cart
+						<scd-cart-getter name="cart"></scd-cart-getter>
+						<span ng-show="cart.totalItems">
+							({{cart.totalItems}})
+						</span>
+						</a>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="https://github.com/drpicox" target="_blank">Github</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+		<ng-view autoscroll></ng-view>
+	</div>
+
+	<!-- build:js({.tmp,.}) app.js -->
+	<script src="bundle.js"></script>
+	<!-- endbuild -->
+</body>
+</html>
