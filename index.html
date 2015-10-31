@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="shoppingCartDemoApp">
+<head>
+	<title>Angular Shopping Cart Demo</title>
+	<link rel="stylesheet" href="app.14ab235f.css">
+
+	<style>
+	[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+		display: none !important;
+	}
+	</style>
+</head>
+<body ng-cloak>
+
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#/catalog">Shopping Cart demo</a>
+			</div>
+
+			<div>
+				<ul class="nav navbar-nav">
+					<li><a href="#/catalog">Catalog</a></li>
+					<li><a href="#/cart">
+						Cart
+						<scd-cart-getter name="cart"></scd-cart-getter>
+						<span ng-show="cart.totalItems">
+							({{cart.totalItems}})
+						</span>
+						</a>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="https://github.com/drpicox/angular-shopping-cart-demo" target="_blank">Github</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+		<ng-view autoscroll></ng-view>
+	</div>
+
+	<script src="app.5bba3b7e.js"></script>
+</body>
+</html>
