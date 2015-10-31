@@ -1,6 +1,6 @@
 {
   "name": "angular-shopping-cart-demo",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Demo of an angular shopping cart",
   "main": "index.js",
   "scripts": {
