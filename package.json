@@ -37,6 +37,7 @@
   "dependencies": {
     "angular": "^1.4.7",
     "angular-route": "^1.4.7",
+    "bootstrap": "^3.3.5",
     "bootswatch": "^3.3.5",
     "drpx-updateable": "^0.1.0"
   }
