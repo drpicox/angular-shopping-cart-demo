@@ -51,6 +51,9 @@ function CartStateFactory(cartLinesState, drpxUpdateable, $rootScope) {
 		state.totalPrice = state.list.reduce(function(sum, cartLine) {
 			return sum + cartLine.product.price * cartLine.quantity;
 		}, 0);
+
+		// cartState is updated... so, we notify
+		state.$update();
 	}
 
 }
