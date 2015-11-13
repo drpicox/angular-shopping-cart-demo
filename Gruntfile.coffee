@@ -53,6 +53,11 @@ module.exports = (grunt) ->
 
 		filerev: build: src: 'www/*.{js,css}'
 
+		karma:
+			options: configFile: 'karma.conf.js', port: '<%= connect.options.port + 20000 %>'
+			unit: singleRun: true
+			dev: background: true, browsers: ['PhantomJS','Chrome']
+
 		less: build:
 			files: '.tmp/bundle.css': 'src/index.less'
 			options:
@@ -75,6 +80,7 @@ module.exports = (grunt) ->
 		watch:
 			grunt: files: [ 'Gruntfile.coffee' ]
 			less: files: [ 'src/**/*.less' ], tasks: [ 'less','autoprefixer' ]
+			karma: files: [ '.tmp/bundle.js', 'src/**/*.spec.js' ], tasks: [ 'karma:dev:run' ]
 			livereload: 
 				options: livereload: '<%= connect.options.livereload %>'
 				files: [
@@ -83,18 +89,26 @@ module.exports = (grunt) ->
 					'.tmp/bundle.*'
 				]
 
+	grunt.registerTask 'test', [
+		'clean'
+		'browserify:dev'
+		'karma:unit'
+	]
+
 	grunt.registerTask 'serve', [
 		'clean'
 		'browserify:dev'
 		'less'
 		'autoprefixer'
 		'connect:livereload'
+		'karma:dev:start'
 		'watch'
 	]
 
 	grunt.registerTask 'build', [
 		'clean'
 		'browserify:www'
+		'karma:unit'
 		'less'
 		'autoprefixer'
 		'copy'
