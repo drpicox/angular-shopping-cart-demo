@@ -30,7 +30,7 @@ function ProductsServiceFactory(productsRemote, productsState) {
 		// only loads data once
 		if (!loadCache) { 
 			// first it gets data from remote
-			loadCache = productsRemote.loadAll()
+			loadCache = productsRemote.retrieveAll()
 
 			// next it deserializes and stores in products state
 			.then(function(serializedProducts) {
