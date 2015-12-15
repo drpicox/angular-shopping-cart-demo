@@ -18,6 +18,7 @@ module.exports = function(config) {
 			'source-map-support',
 		],
 
+		autoWatch: true,
 		colors: true,
 
 	});
