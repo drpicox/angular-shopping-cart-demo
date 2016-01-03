@@ -13,7 +13,6 @@
   "author": "David Rodenas <david.rodenas@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "browserify-ngannotate": "^1.0.1",
     "envify": "^3.4.0",
     "grunt": "^0.4.5",
     "grunt-autoprefixer": "^3.0.3",
@@ -35,10 +34,12 @@
     "uglifyify": "^3.0.1"
   },
   "dependencies": {
-    "angular": "^1.4.7",
-    "angular-route": "^1.4.7",
-    "bootstrap": "^3.3.5",
-    "bootswatch": "^3.3.5",
-    "drpx-updateable": "^0.1.0"
+    "angular2": "2.0.0-beta.0",
+    "systemjs": "0.19.6",
+    "es6-promise": "^3.0.2",
+    "es6-shim": "^0.33.3",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.0",
+    "zone.js": "0.5.10"
   }
 }

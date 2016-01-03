@@ -12,39 +12,16 @@
 	}
 	</style>
 </head>
-<body ng-cloak>
-
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#/catalog">Shopping Cart demo</a>
-			</div>
-
-			<div>
-				<ul class="nav navbar-nav">
-					<li><a href="#/catalog">Catalog</a></li>
-					<li><a href="#/cart">
-						Cart
-						<scd-cart-getter name="cart"></scd-cart-getter>
-						<span ng-show="cart.totalItems">
-							({{cart.totalItems}})
-						</span>
-						</a>
-					</li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="https://github.com/drpicox/angular-shopping-cart-demo" target="_blank">Github</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-
-	<div class="container">
-		<ng-view autoscroll></ng-view>
-	</div>
+<body>
+	<shopping-cart-demo-app></shopping-cart-demo-app>
 
 	<!-- build:js({.tmp,.}) app.js -->
+	<script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
 	<script src="bundle.js"></script>
 	<!-- endbuild -->
+
+	<script>
+window.boot();
+	</script>
 </body>
 </html>

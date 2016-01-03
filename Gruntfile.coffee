@@ -20,7 +20,7 @@ module.exports = (grunt) ->
 					transform: [
 						'hintify'
 						[ 'stringify', 'extensions': [ '.html' ] ]
-						'browserify-ngannotate'
+						#'browserify-ngannotate'
 						'envify'
 					]
 			www:
@@ -28,7 +28,7 @@ module.exports = (grunt) ->
 				options: transform: [
 					'hintify'
 					[ 'stringify', 'extensions': [ '.html' ], "minify": true, ]
-					'browserify-ngannotate'
+					#'browserify-ngannotate'
 					'envify'
 					'uglifyify'
 				]

@@ -21,6 +21,7 @@
     "window": false,
     "document": false,
     "JSON": false,
+    "Promise": false,
     "Exception": false
   }
 }
