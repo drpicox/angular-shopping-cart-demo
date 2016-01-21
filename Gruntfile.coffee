@@ -1,4 +1,14 @@
+appCodename = 'scf'
+styles = 'sass' # 'less' # or 'sass'
+portServe = 9259
+
 module.exports = (grunt) ->
+
+	aliasify = [ 'aliasify', do ->
+		replacements = {}
+		replacements["#{appCodename}-([^.]+)"] = './src/$1'
+		replacements: replacements
+	]
 
 	grunt.initConfig
 
@@ -18,6 +28,7 @@ module.exports = (grunt) ->
 					watch: true
 					browserifyOptions: { debug: true }
 					transform: [
+						aliasify
 						'hintify'
 						[ 'stringify', 'extensions': [ '.html' ] ]
 						'browserify-ngannotate'
@@ -26,6 +37,7 @@ module.exports = (grunt) ->
 			www:
 				files: '.tmp/bundle.js': [ 'src/index.js']
 				options: transform: [
+					aliasify
 					'hintify'
 					[ 'stringify', 'extensions': [ '.html' ], "minify": true, ]
 					'browserify-ngannotate'
@@ -49,7 +61,7 @@ module.exports = (grunt) ->
 
 		connect:
 			options:
-				hostname: '0.0.0.0', port: 9843, livereload: 19843 # CHANGE ME
+				hostname: '0.0.0.0', open:true, port: portServe, livereload: 10000+portServe
 			livereload:	options: base: [ '.tmp','src','.' ]
 
 		filerev: build: src: 'www/*.{js,css}'
@@ -70,6 +82,12 @@ module.exports = (grunt) ->
 				dumpLineNumbers: 'comments'
 				optimization: 0
 
+		sass: build:
+			files: '.tmp/bundle.css': 'src/index.scss'
+			options:
+				includePaths: [ 'src/', '.' ]
+				sourceMap: true
+
 		useminPrepare:
 			html: 'src/index.html'
 			options: dest: 'www'
@@ -82,12 +100,13 @@ module.exports = (grunt) ->
 			grunt: files: [ 'Gruntfile.coffee' ]
 			less: files: [ 'src/**/*.less' ], tasks: [ 'less','autoprefixer' ]
 			karma: files: [ '.tmp/bundle.js', 'src/**/*.spec.js' ], tasks: [ 'karma:dev:run' ]
+			sass: files: [ 'src/**/*.scss' ], tasks: [ 'sass','autoprefixer' ]
 			livereload: 
 				options: livereload: '<%= connect.options.livereload %>'
 				files: [
 					'src/index.html'
 					'src/**/*.{png,gif,jpg,svg}'
-					'.tmp/bundle.*'
+					'.tmp/bundle.js','.tmp/bundle.css'
 				]
 
 	grunt.registerTask 'test', [
@@ -99,8 +118,9 @@ module.exports = (grunt) ->
 	grunt.registerTask 'serve', [
 		'clean'
 		'browserify:dev'
-		'less'
+		styles
 		'autoprefixer'
+		'karma:unit'
 		'connect:livereload'
 		'karma:dev:start'
 		'watch'
@@ -110,7 +130,7 @@ module.exports = (grunt) ->
 		'clean'
 		'browserify:www'
 		'karma:unit'
-		'less'
+		styles
 		'autoprefixer'
 		'copy'
 		'useminPrepare'

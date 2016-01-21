@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html ng-app="shoppingCartDemoApp" ng-strict-di>
+<html ng-app="drpxScaffoldApp" ng-strict-di>
 <head>
-	<title>Angular Shopping Cart Demo</title>
+	<title>Angular1 Scaffold App</title>
 	<!-- build:css({.tmp,.}) app.css -->
 	<link href="bundle.css" rel='stylesheet' type='text/css'>
 	<!-- endbuild -->
@@ -17,27 +17,18 @@
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#/catalog">Shopping Cart demo</a>
-			</div>
-
-			<div>
-				<ul class="nav navbar-nav">
-					<li><a href="#/catalog">Catalog</a></li>
-					<li><a href="#/cart">
-						Cart
-						<scd-cart-getter name="cart"></scd-cart-getter>
-						<span ng-show="cart.totalItems">
-							({{cart.totalItems}})
-						</span>
-						</a>
-					</li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="https://github.com/drpicox/angular-shopping-cart-demo" target="_blank">Github</a></li>
-				</ul>
+				<a class="navbar-brand" href="#/">Scaffold App</a>
 			</div>
 		</div>
 	</nav>
+
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Angular is {{'enabled'}}.</h1>
+			<p>This is the basic angular template. You can follow the next link to learn more about it.</p>
+			<p><a class="btn btn-primary btn-lg" href="https://github.com/drpicox/angular1-scaffold" role="button" target="_blank">Learn more</a></p>
+		</div>
+	</div>
 
 	<div class="container">
 		<ng-view autoscroll></ng-view>
