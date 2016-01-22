@@ -2,9 +2,9 @@
 
 var angular = require('angular');
 
-module.exports = angular.module('drpxScaffoldApp', [
+module.exports = angular.module('drpxShoppingCartDemoApp', [
 
-	//require('./yourLogic'),
+	require('./products'),
 
 	//require('angular-route')
 ])

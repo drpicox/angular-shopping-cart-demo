@@ -1,10 +1,10 @@
 // See: http://jasmine.github.io/2.4/introduction.html
-describe('drpxScaffoldApp', function() {
+describe('drpxShoppingCartDemoApp', function() {
 
 	it('should exists', function() {
 
-		var drpxScaffoldApp = angular.module('drpxScaffoldApp');
-		expect(drpxScaffoldApp).toBeDefined();
+		var drpxShoppingCartDemoApp = angular.module('drpxShoppingCartDemoApp');
+		expect(drpxShoppingCartDemoApp).toBeDefined();
 	});
 
 });

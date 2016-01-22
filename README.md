@@ -1,4 +1,4 @@
-Angular1 Scaffold Frontend
+Angular Shopping Cart Demo
 ==========================
 
 This is the scaffold of a frontend app.
