@@ -10,6 +10,7 @@ module.exports = angular.module('scd.products.services', [
 	require('drpx-updateable'),
 ])
 
+.factory('Product', require('./Product.factory'))
 .factory('productsDictionary', require('./ProductsDictionary.factory'))
 .factory('productsRemote', require('./ProductsRemote.factory'))
 .factory('productsService', require('./ProductsService.factory'))
