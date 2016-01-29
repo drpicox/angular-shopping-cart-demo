@@ -5,6 +5,7 @@ var angular = require('angular');
 module.exports = angular.module('drpxShoppingCartDemoApp', [
 
 	require('./cart'),
+	require('./header'),
 	require('./products'),
 	require('./route-catalog'),
 
