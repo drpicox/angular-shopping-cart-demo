@@ -14,81 +14,93 @@ describe('cartService', function() {
 		}]);
 	}));
 
-	it('buy one article updates totals', inject(function(cartLinesDictionary, cartService, cartSingleton, $rootScope) {
+	it('buy one article updates totals', inject(function(cartLinesService, cartService, $rootScope) {
 		
-		cartService.buy(1);		
+		var cart = cartService.getInstance();
+		cartLinesService.buy(1);		
 
 		$rootScope.$digest();
 
-		expect(cartLinesDictionary.list.length).toBe(1);
-		expect(cartLinesDictionary.list[0].id).toBe(1);
-		expect(cartLinesDictionary.list[0].quantity).toBe(1);
-		expect(cartLinesDictionary.list[0]).toBe(cartLinesDictionary.map[1]);
-		expect(cartSingleton.instance.count).toBe(1);
-		expect(cartSingleton.instance.price).toBe(2.2);
+		expect(cart.count).toBe(1);
+		expect(cart.price).toBe(2.2);
 	}));
 
-	it('buy five times articles updates totals', inject(function(cartLinesDictionary, cartService, cartSingleton, $rootScope) {
+	it('buy five times articles updates totals', inject(function(cartLinesService, cartService, $rootScope) {
 		
-		cartService.buy(1);
-		cartService.buy(3);
+		var cart = cartService.getInstance();
+		cartLinesService.buy(1);
+		cartLinesService.buy(3);
 
 		$rootScope.$digest();
 
-		cartService.buy(1);
-		cartService.buy(1);
-		cartService.buy(3);
+		cartLinesService.buy(1);
+		cartLinesService.buy(1);
+		cartLinesService.buy(3);
 
 		$rootScope.$digest();
 
-		expect(cartLinesDictionary.list.length).toBe(2);
-		expect(cartSingleton.instance.count).toBe(5);
-		expect(cartSingleton.instance.price).toBe(3*2.2 + 2*4.4);
+		expect(cart.count).toBe(5);
+		expect(cart.price).toBe(3*2.2 + 2*4.4);
 	}));
 
-	it('increase acts like buy', inject(function(cartLinesDictionary, cartService, cartSingleton, $rootScope) {
+	it('increase acts like buy', inject(function(cartLinesService, cartService, $rootScope) {
 		
-		cartService.increase(1, 1);
-		cartService.increase(3, 1);
+		var cart = cartService.getInstance();
+		cartLinesService.increase(1, 1);
+		cartLinesService.increase(3, 1);
 
 		$rootScope.$digest();
 
-		cartService.increase(1, 3);
-		cartService.increase(1, 1);
-		cartService.increase(3, 3);
+		cartLinesService.increase(1, 3);
+		cartLinesService.increase(1, 1);
+		cartLinesService.increase(3, 3);
 
 		$rootScope.$digest();
 
-		expect(cartLinesDictionary.list.length).toBe(2);
-		expect(cartSingleton.instance.count).toBe(9);
-		expect(cartSingleton.instance.price).toBe(5*2.2 + 4*4.4);
+		expect(cart.count).toBe(9);
+		expect(cart.price).toBe(5*2.2 + 4*4.4);
 	}));
 
-	it('decrease reduces totals', inject(function(cartLinesDictionary, cartService, cartSingleton, $rootScope) {
+	it('decrease reduces totals', inject(function(cartLinesService, cartService, $rootScope) {
 		
-		cartService.increase(1, 5);
-		cartService.decrease(1, 2);
+		var cart = cartService.getInstance();
+		cartLinesService.increase(1, 5);
+		cartLinesService.decrease(1, 2);
 
 		$rootScope.$digest();
 
-		expect(cartLinesDictionary.list.length).toBe(1);
-		expect(cartSingleton.instance.count).toBe(3);
-		expect(cartSingleton.instance.price).toBe(3*2.2);
+		expect(cart.count).toBe(3);
+		expect(cart.price).toBe(3*2.2);
 	}));
 
-	it('drop removes a product and updates totals', inject(function(cartLinesDictionary, cartService, cartSingleton, $rootScope) {
+	it('drop removes a product and updates totals', inject(function(cartLinesService, cartService, $rootScope) {
 		
-		cartService.increase(1, 3);
-		cartService.increase(3, 5);
-		cartService.drop(3);
+		var cart = cartService.getInstance();
+		cartLinesService.increase(1, 3);
+		cartLinesService.increase(3, 5);
+		cartLinesService.drop(3);
 
 		$rootScope.$digest();
 
-		expect(cartLinesDictionary.list.length).toBe(1);
-		expect(cartLinesDictionary.map[3]).toBeUndefined();
-		expect(cartSingleton.instance.count).toBe(3);
-		expect(cartSingleton.instance.price).toBe(3*2.2);
-		expect(cartSingleton.instance.price).toBe(3*2.2);
+		expect(cart.count).toBe(3);
+		expect(cart.price).toBe(3*2.2);
+	}));
+
+	it('should fire update event', inject(function(cartLinesService, cartService, $rootScope) {
+
+		var count, price;
+		var cart = cartService.getInstance();
+
+		$rootScope.$on('scd.cartLinesUpdate', function() {
+			count = cart.count;
+			price = cart.price;
+		});
+
+		cartLinesService.buy(1);
+		$rootScope.$digest();
+
+		expect(count).toBe(1);
+		expect(price).toBe(2.2);
 	}));
 
 

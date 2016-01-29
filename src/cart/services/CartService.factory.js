@@ -4,12 +4,9 @@
 module.exports = CartServiceFactory;
 
 /* @ngInject */
-function CartServiceFactory(cartLinesDictionary, cartLinesService, cartSingleton, productsDictionary, $rootScope) {
+function CartServiceFactory(cartLinesService, cartSingleton, productsService, $rootScope) {
 	var service = {
-		buy: buy,//(productId)
-		decrease: decrease,//(productId, quantity)
-		drop: drop,//(productId)
-		increase: increase,//(productId, quantity)
+		getInstance: getInstance,//():cart
 	};
 
 	$rootScope.$on('scd.cartLinesUpdate', _update);
@@ -19,20 +16,8 @@ function CartServiceFactory(cartLinesDictionary, cartLinesService, cartSingleton
 
 	//////
 
-	function buy(productId) {
-		cartLinesService.increase(productId, 1);
-	}
-
-	function decrease(productId, quantity) {
-		cartLinesService.decrease(productId, quantity);
-	}
-
-	function drop(productId) {
-		cartLinesService.drop(productId);
-	}
-
-	function increase(productId, quantity) {
-		cartLinesService.increase(productId, quantity);
+	function getInstance() {
+		return cartSingleton.instance;
 	}
 
 	//////
@@ -41,8 +26,8 @@ function CartServiceFactory(cartLinesDictionary, cartLinesService, cartSingleton
 		var cart = cartSingleton.instance;
 		
 		cart.clear();
-		cartLinesDictionary.list.forEach(function(cartLine) {
-			var product = productsDictionary.map[cartLine.id];
+		cartLinesService.getList().forEach(function(cartLine) {
+			var product = productsService.get(cartLine.id);
 			cart.account(product, cartLine.quantity);
 		});
 
