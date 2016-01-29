@@ -91,7 +91,7 @@ describe('cartService', function() {
 		var count, price;
 		var cart = cartService.getInstance();
 
-		$rootScope.$on('scd.cartLinesUpdate', function() {
+		$rootScope.$on('scd.cartUpdate', function() {
 			count = cart.count;
 			price = cart.price;
 		});

@@ -4,31 +4,71 @@ describe('productsService', function() {
 	
 	beforeEach(module('scd.products.services'));
 
-	var productsRemote, productsDictionary;
-	beforeEach(module(function($provide) {
-		productsRemote = jasmine.createSpyObj('productsRemote', ['retrieveAll']);
-		productsDictionary = jasmine.createSpyObj('productsDictionary', ['takeAll','$update']);
-	
-		productsDictionary.list = [];
+	it('load all products from remote, store them and return list instance', inject(function(productsService, $httpBackend) {
+		var list = productsService.getList();
 
-		$provide.value('productsDictionary', productsDictionary);
-		$provide.value('productsRemote', productsRemote);
-	}));
+		var result;
+		var expected = [{id:1},{id:2},{id:3}];
+		$httpBackend.expect('GET','/api/v1/products').respond(expected);
 
-	it('load all products from remote, store them in the dictionary and return dictionary list', inject(function(productsService, $q, $rootScope) {
-		
-		var rawList = [1,2,3], result;
-		productsRemote.retrieveAll.and.returnValue($q.when(rawList));
 		productsService.loadAll().then(function(newResult) {
 			result = newResult;
 		});
 
-		$rootScope.$digest();
+		$httpBackend.flush();
 
-		expect(productsRemote.retrieveAll).toHaveBeenCalled();
-		expect(productsDictionary.takeAll).toHaveBeenCalledWith(rawList);
-		expect(productsDictionary.$update).toHaveBeenCalled();
-		expect(result).toBe(productsDictionary.list);
+		var product1 = productsService.get(1);
+		var product2 = productsService.get(2);
+		var product3 = productsService.get(3);
+
+		expect(result).toBe(list);
+		expect(list.length).toBe(3);
+		expect(product1.id).toBe(1);
+		expect(product2.id).toBe(2);
+		expect(product3.id).toBe(3);
+		expect(list).toContain(product1);
+		expect(list).toContain(product2);
+		expect(list).toContain(product3);
 	}));
 
+	it('load product details correctly', inject(function(productsService, $httpBackend) {
+		var list = productsService.getList();
+
+		var expected = [{id:1,name:'aname',price:'aprice',image:'animage'}];
+		$httpBackend.expect('GET','/api/v1/products').respond(expected);
+
+		productsService.loadAll();
+
+		$httpBackend.flush();
+
+		var product1 = list[0];
+		expect(product1.id).toBe(expected[0].id);
+		expect(product1.name).toBe(expected[0].name);
+		expect(product1.price).toBe(expected[0].price);
+		expect(product1.image).toBe(expected[0].image);
+	}));
+
+	it('load triggers update event', inject(function(productsService, $httpBackend, $rootScope) {
+		var list = productsService.getList();
+		var product1;
+
+		$rootScope.$on('scd.productsUpdate', function() {
+			product1 = list[0];
+		});
+
+		var expected = [{id:1}];
+		$httpBackend.expect('GET','/api/v1/products').respond(expected);
+
+		productsService.loadAll();
+
+		$httpBackend.flush();
+		$rootScope.$digest();
+
+		expect(product1.id).toBe(1);
+	}));
+
+	afterEach(inject(function($httpBackend) {
+		$httpBackend.verifyNoOutstandingExpectation();
+		$httpBackend.verifyNoOutstandingRequest();
+	}));
 });
