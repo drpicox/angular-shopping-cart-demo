@@ -6,17 +6,16 @@ module.exports = angular.module('drpxShoppingCartDemoApp', [
 
 	require('./cart'),
 	require('./products'),
+	require('./route-catalog'),
 
-	//require('angular-route')
+	require('angular-route'),
 ])
 
-/*
 .config(function($routeProvider) {
 
 	$routeProvider.otherwise({
-		redirectTo: '/TODO',
+		redirectTo: '/catalog',
 	});
 })
-*/
 
 .name;

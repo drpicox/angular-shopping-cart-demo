@@ -113,6 +113,15 @@ describe('cartLinesService', function() {
 		expect(lines[0].quantity).toBe(3);
 	}));
 
+	it('should implement isBought', inject(function(cartLinesService, $rootScope) {
+
+		cartLinesService.buy(1);
+		$rootScope.$digest();
+
+		expect(cartLinesService.isBought(1)).toBe(true);
+		expect(cartLinesService.isBought(3)).toBe(false);
+	}));
+
 	it('changes triggers Update event eventually', inject(function(cartLinesService, $rootScope) {
 		var updates = {}, step;
 

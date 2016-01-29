@@ -12,6 +12,7 @@ function CartLinesServiceFactory(cartLinesDictionary) {
 		get: get,//(productId):cartLine
 		getList: getList,//():[cartLine]
 		increase: increase,//(productId, quantity)
+		isBought: isBought,//(productId)
 	};
 	return service;
 
@@ -42,5 +43,9 @@ function CartLinesServiceFactory(cartLinesDictionary) {
 	function increase(productId, quantity) {
 		cartLinesDictionary.increase(productId, quantity);
 		cartLinesDictionary.$update();
+	}
+
+	function isBought(productId) {
+		return !!get(productId);
 	}
 }

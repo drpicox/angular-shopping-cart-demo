@@ -1,0 +1,14 @@
+<div class="row">
+
+	<h1>Catalog</h1>
+
+	<div class="well"
+		ng-repeat="product in vm.products track by product.id" 
+		>
+
+		<scd-catalog-product product="product"
+			></scd-catalog-product>
+
+	</div>
+	
+</div>
